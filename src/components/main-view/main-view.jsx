@@ -13,7 +13,8 @@ export const MainView = () => {
     fetch("https://movie-app-il-c396ba198e0e.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((movie) => {
+        console.log(data);
+        const moviesFromApi = data.map((movie) => {
           return {
             id: movie._id,
             title: movie.Title,
