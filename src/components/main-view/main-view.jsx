@@ -21,7 +21,7 @@ export const MainView = () => {
             description: movie.Description,
             genre: movie.Genre?.Name,
             director: movie.Director?.Name,
-            image: movie.ImagePath.trim(), // in case there are extra spaces
+            image: movie.ImagePath, // in case there are extra spaces
             featured: movie.Featured,
           };
         });

@@ -18447,7 +18447,7 @@ const MainView = ()=>{
                     description: movie.Description,
                     genre: movie.Genre?.Name,
                     director: movie.Director?.Name,
-                    image: movie.ImagePath.trim(),
+                    image: movie.ImagePath,
                     featured: movie.Featured
                 };
             });
@@ -19316,7 +19316,7 @@ const MovieView = ({ movie, onBackClick })=>{
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                    src: movie.ImagePath.trim(),
+                    src: movie.ImagePath,
                     alt: movie.Title
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
