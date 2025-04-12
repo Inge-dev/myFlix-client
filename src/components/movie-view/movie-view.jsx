@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 
 export const MovieView = ({ movie, onBackClick }) => {
+
   return (
     <div>
       <div>
-        <img src={movie.ImagePath} alt={movie.Title} />
+        <img src={movie.ImagePath?.trim().replace("http://", "https://")} alt={movie.Title} />
+
       </div>
       <div>
         <span>Title: </span>

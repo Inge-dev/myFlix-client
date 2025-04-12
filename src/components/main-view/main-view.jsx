@@ -13,22 +13,22 @@ export const MainView = () => {
     fetch("https://movie-app-il-c396ba198e0e.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        const moviesFromApi = data.map((movie) => {
-          return {
-            id: movie._id,
-            title: movie.Title,
-            description: movie.Description,
-            genre: movie.Genre?.Name,
-            director: movie.Director?.Name,
-            image: movie.ImagePath, // in case there are extra spaces
-            featured: movie.Featured,
-          };
-        });
-
-        setMovies(moviesFromApi);
+        // const moviesFromApi = data.map((movie) => {
+        //   return {
+        //     id: movie._id,
+        //     title: movie.Title,
+        //     description: movie.Description,
+        //     genre: movie.Genre?.Name,
+        //     director: movie.Director?.Name,
+        //     image: movie.ImagePath,
+        //     featured: movie.Featured,
+        //   };
+        // });
+        setMovies(data);
       });
   }, []);
+
+  console.log("movies:", movies);
 
   if (selectedMovie) {
     return (
@@ -42,9 +42,10 @@ export const MainView = () => {
 
   return (
     <div>
+      <h2>Movie List</h2>
       {movies.map((movie) => (
         <MovieCard
-          key={movie.id}
+          key={movie._id}
           movie={movie}
           onMovieClick={(newSelectedMovie) => {
             setSelectedMovie(newSelectedMovie);
