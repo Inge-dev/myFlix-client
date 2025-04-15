@@ -17,9 +17,9 @@ export const MainView = () => {
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
 
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(storedUser ? storedUser : null);
 
   useEffect(() => {
     if (!token) {
