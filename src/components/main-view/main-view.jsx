@@ -19,7 +19,7 @@ export const MainView = () => {
 
   const [user, setUser] = useState(storedUser ? storedUser : null);
 
-  const [token, setToken] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
 
   useEffect(() => {
     if (!token) {
