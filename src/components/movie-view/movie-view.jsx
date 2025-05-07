@@ -1,46 +1,45 @@
 import PropTypes from "prop-types";
+import Card from "react-bootstrap/Card";
+
+import Button from "react-bootstrap/Button";
 
 export const MovieView = ({ movie, onBackClick }) => {
 
   return (
-    <div>
-      <div>
-        <img src={movie.ImagePath?.trim().replace("http://", "https://")} alt={movie.Title} />
-
-      </div>
-      <div>
-        <span>Title: </span>
-        <span>{movie.Title}</span>
-      </div>
-      <div>
-        <span>Description: </span>
-        <span>{movie.Description}</span>
-      </div>
-      <div>
-        <span>Genre: </span>
-        <span>{movie.Genre?.Name}</span>
-      </div>
-      <div>
-        <span>Genre Description: </span>
-        <span>{movie.Genre?.Description}</span>
-      </div>
-      <div>
-        <span>Director: </span>
-        <span>{movie.Director?.Name}</span>
-      </div>
-      <div>
-        <span>Director Bio: </span>
-        <span>{movie.Director?.Bio}</span>
-      </div>
-      <div>
-        <span>Birth Date: </span>
-        <span>{new Date(movie.Director?.Birth).toLocaleDateString()}</span>
-      </div>
-      <div>
-        <span>Featured: </span>
-        <span>{movie.Featured ? 'Yes' : 'No'}</span>
-      </div>
-      <button onClick={onBackClick}>Back</button>
-    </div>
+    <Card className="movie-view border-secondary">
+      <Card.Img
+        variant="top"
+        className="img-fluid"
+        src={movie.ImagePath?.trim().replace("http://", "https://") || "https://via.placeholder.com/300x450?text=No+Image"}
+        alt={movie.Title}
+      />
+      <Card.Body>
+        <Card.Title>{movie.Title}</Card.Title>
+        <Card.Text>
+          <strong>Description:</strong> {movie.Description}
+        </Card.Text>
+        <Card.Text>
+          <strong>Genre:</strong> {movie.Genre?.Name}
+        </Card.Text>
+        <Card.Text>
+          <strong>Genre Description:</strong> {movie.Genre?.Description}
+        </Card.Text>
+        <Card.Text>
+          <strong>Director:</strong> {movie.Director?.Name}
+        </Card.Text>
+        <Card.Text>
+          <strong>Director Bio:</strong> {movie.Director?.Bio}
+        </Card.Text>
+        <Card.Text>
+          <strong>Birth Date:</strong> {new Date(movie.Director?.Birth).toLocaleDateString()}
+        </Card.Text>
+        <Card.Text>
+          <strong>Featured:</strong> {movie.Featured ? "Yes" : "No"}
+        </Card.Text>
+        <Button variant="primary" onClick={onBackClick} className="mt-3">
+          Back
+        </Button>
+      </Card.Body>
+    </Card>
   );
-};   
+};
