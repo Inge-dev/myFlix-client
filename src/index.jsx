@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 
+import { BrowserRouter } from 'react-router-dom';
 // Import statement to indicate that you need to bundle `./index.scss`
 import "./index.scss";
 
@@ -11,11 +12,12 @@ import { MainView } from './components/main-view/main-view';
 const App = () => {
 
   return (
-    <Container>
-      <MainView />
-    </Container>
+    <BrowserRouter>
+      <Container>
+        <MainView />
+      </Container>
+    </BrowserRouter>
   );
-
 };
 
 // Finds the root of your app
