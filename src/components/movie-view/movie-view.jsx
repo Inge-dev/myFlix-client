@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
-
 import Button from "react-bootstrap/Button";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 export const MovieView = ({ movie, onBackClick }) => {
 
@@ -36,9 +37,9 @@ export const MovieView = ({ movie, onBackClick }) => {
         <Card.Text>
           <strong>Featured:</strong> {movie.Featured ? "Yes" : "No"}
         </Card.Text>
-        <Button variant="primary" onClick={onBackClick} className="mt-3">
-          Back
-        </Button>
+        <Link to="/" className="mt-3">
+          <Button variant="primary">Back</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
