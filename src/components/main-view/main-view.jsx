@@ -3,15 +3,15 @@ import { MovieCard } from "../movie-card/movie-card.jsx";
 import { MovieView } from "../movie-view/movie-view.jsx";
 import { LoginView } from "../login-view/login-view.jsx";
 import { SignupView } from "../signup-view/signup-view.jsx";
+import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
+import { ProfileView } from "../profile-view/profile-view.jsx";
 import Row from "react-bootstrap/Row";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export const MainView = () => {
-  const location = useLocation();
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
@@ -33,14 +33,45 @@ export const MainView = () => {
       });
   }, [token]);
 
-  const showLogoutButton = user && location.pathname !== "/login" && location.pathname !== "/signup";
+  useEffect(() => {
+    if (!user && storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
 
   return (
-    <Container className="mt-4">
+    <BrowserRouter>
       <Row className="justify-content-md-center">
+
+        <NavigationBar
+          user={user}
+          onLoggedOut={() => {
+            setUser(null);
+            setToken(null);
+            localStorage.clear();
+          }}
+        />
+
         <Routes>
           <Route
+            path="/profile"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <ProfileView
+                    user={user}
+                    token={token}
+                    movies={movies}
+                    setUser={setUser}
+                  />
+                )}
+              </>
+            }
+          />
 
+          <Route
             path="/signup"
             element={
               <>
@@ -81,7 +112,10 @@ export const MainView = () => {
                 ) : (
                   <Col md={8}>
                     <MovieView
-                      movie={movies} />
+                      movies={movies}
+                      user={user}
+                      token={token}
+                      setUser={setUser} />
                   </Col>
                 )}
               </>
@@ -110,22 +144,6 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-
-      {showLogoutButton && (
-        <div className="text-center">
-          <Button
-            variant="secondary"
-            className="mt-3"
-            onClick={() => {
-              setUser(null);
-              setToken(null);
-              localStorage.clear();
-            }}
-          >
-            Logout
-          </Button>
-        </div>
-      )}
-    </Container >
+    </BrowserRouter>
   );
 };

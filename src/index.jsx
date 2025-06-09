@@ -12,11 +12,9 @@ import { MainView } from './components/main-view/main-view';
 const App = () => {
 
   return (
-    <BrowserRouter>
-      <Container>
-        <MainView />
-      </Container>
-    </BrowserRouter>
+    <Container>
+      <MainView />
+    </Container>
   );
 };
 
