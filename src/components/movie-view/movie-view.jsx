@@ -1,9 +1,62 @@
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
-
 import Button from "react-bootstrap/Button";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import "./movie-view.scss"
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies, user, token, setUser }) => {
+  const { movieId } = useParams();
+
+  const movie = movies.find((m) => m._id === movieId);
+
+  const isFavorite = user.favoriteMovies.includes(movie._id);
+
+  const handleAddFavorites = () => {
+    fetch(`https://movie-app-il-c396ba198e0e.herokuapp.com/users/${user.username}/movies/${movie._id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then((updatedUser) => {
+        alert(`${movie.Title} has been added to your favorites!`);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        setUser(updatedUser);
+      })
+      .catch(() => alert("Could not add movie to favorites"));
+  };
+
+  const handleRemoveFavorite = () => {
+    fetch(`https://movie-app-il-c396ba198e0e.herokuapp.com/users/${user.username}/movies/${movie._id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          const updatedFavorites = user.favoriteMovies.filter(
+            (id) => id !== movie._id
+          );
+          setUser({ ...user, favoriteMovies: updatedFavorites });
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...user, favoriteMovies: updatedFavorites })
+          );
+          alert(`${movie.Title} has been removied from your favorites.`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error removing favorite:", error);
+        alert("Something went wrong.");
+      });
+  };
+
 
   return (
     <Card className="movie-view border-secondary">
@@ -36,10 +89,29 @@ export const MovieView = ({ movie, onBackClick }) => {
         <Card.Text>
           <strong>Featured:</strong> {movie.Featured ? "Yes" : "No"}
         </Card.Text>
-        <Button variant="primary" onClick={onBackClick} className="mt-3">
-          Back
-        </Button>
+        {isFavorite ? (
+          <Button
+            variant="warning"
+            onClick={handleRemoveFavorite}
+            className="me-2">
+            Remove from Favorites
+          </Button>
+        ) : (
+          <Button
+            variant="success"
+            onClick={handleAddFavorites}
+            className="custom-colored-button me-2">
+            Add to Favorites
+          </Button>
+        )}
+        <Link to="/" className="mt-3">
+          <Button variant="primary" className="custom-colored-button">Back</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
+};
+
+MovieView.propTypes = {
+  movies: PropTypes.array.isRequired,
 };

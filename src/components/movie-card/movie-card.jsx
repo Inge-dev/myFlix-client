@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./movie-card.scss";
-export const MovieCard = ({ movie, onMovieClick }) => {
+export const MovieCard = ({ movie }) => {
 
   // console.log("Image URL:", movie.ImagePath);
   return (
@@ -17,13 +18,9 @@ export const MovieCard = ({ movie, onMovieClick }) => {
         <Card.Text className="flex-grow-1">
           {movie.Description.length > 100 ? movie.Description.slice(0, 100) + '...' : movie.Description}
         </Card.Text>
-        <Button onClick={() =>
-          onMovieClick(movie)}
-          variant="primary"
-          className="mt-auto"
-        >
-          Open
-        </Button>
+        <Link to={`/movies/${encodeURIComponent(movie._id)}`} className="mt-auto">
+          <Button variant="link" className="custom-link-button">Open</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
