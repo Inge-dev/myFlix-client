@@ -1,0 +1,12 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.custom-colored-button {
+  color: black !important;
+  background-color: $primary !important;
+
+
+  &:hover {
+    color: color.adjust($primary, $lightness: -10%) !important;
+  }
+}
