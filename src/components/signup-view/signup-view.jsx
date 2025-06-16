@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import "./signup-view.scss";
 
 export const SignupView = ({ onSignedUp }) => {
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ export const SignupView = ({ onSignedUp }) => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" className="custom-colored-button" type="submit">
               Sign Up
             </Button>
           </Form>

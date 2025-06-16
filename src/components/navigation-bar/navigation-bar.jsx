@@ -5,15 +5,15 @@ import "./navigation-bar.scss";
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (
     <Navbar bg="light" variant="light" expand="lg">
-      <Container>
-        <div className="mx-auto">
-          <Navbar.Brand as={Link} to="/" className="text-center navbar-title">
-            MyFlix Movies App
-          </Navbar.Brand>
-        </div>
+      <Container className="d-flex justify-content-between align-items-center">
+        <div style={{ width: "100px" }}></div>
+        <Navbar.Brand as={Link} to="/" className="text-center navbar-title fw-bold">
+          MyFlix Movies App
+        </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="ms-auto">
             {!user && (
               <>
                 <Nav.Link as={Link} to="/login">
