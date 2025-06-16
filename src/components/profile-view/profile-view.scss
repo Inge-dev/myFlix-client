@@ -10,3 +10,16 @@
     color: color.adjust($primary, $lightness: -10%) !important;
   }
 }
+
+.accordion-button {
+  background-color: $primary !important;
+  color: black !important;
+  border: none;
+  box-shadow: none;
+
+  &:hover,
+  &:not(.collapsed) {
+    background-color: color.adjust($primary, $lightness: -10%) !important;
+    color: black !important;
+  }
+}
