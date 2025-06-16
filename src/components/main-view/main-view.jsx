@@ -10,6 +10,7 @@ import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
 
 export const MainView = () => {
 
@@ -18,6 +19,8 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [selectedGenre, setSelectedGenre] = useState("All");
+  const genres = ["All", "Thriller", "Romance", "Romantic Comedy", "Drama", "Musical", "Biography"];
 
   useEffect(() => {
     if (!token) {
@@ -131,12 +134,41 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
-                      <Col key={movie._id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                        <MovieCard
-                          movie={movie} />
-                      </Col>
-                    ))}
+                    <Col xs={12} className="mb-4">
+                      <select
+                        className="form-select"
+                        value={selectedGenre}
+                        onChange={(e) => setSelectedGenre(e.target.value)}
+                      >
+                        {["All", "Thriller", "Romance", "Romantic Comedy", "Drama", "Musical", "Biography"].map(
+                          (genre) => (
+                            <option key={genre} value={genre}>
+                              {genre}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </Col>
+
+                    {(() => {
+
+                      movies.forEach((movie) => {
+                        console.log("Genre Name:", movie.Genre?.Name);
+                      });
+
+                      return movies
+                        .filter((movie) => {
+                          if (selectedGenre === "All") return true;
+
+                          return movie.Genre && movie.Genre.Name === selectedGenre;
+                        })
+                        .map((movie) => (
+                          <Col key={movie._id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                            <MovieCard
+                              movie={movie} />
+                          </Col>
+                        ));
+                    })()}
                   </>
                 )}
               </>
@@ -144,6 +176,6 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 };
